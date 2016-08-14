@@ -29,7 +29,7 @@
 // NOTE: Header files contained in the main sketch don't need to be
 //		included a second time.
 
-#define TEST 0
+
 
 // ============================================================================
 // LORA GATEWAY/MODEM FUNCTIONS
@@ -168,7 +168,10 @@ void setPow(uint8_t powe) {
 	uint8_t pac = 0x80 | (powe & 0xF);
 	writeRegister(REG_PAC,pac);
 	writeRegister(REG_PADAC, readRegister(REG_PADAC)|0x4);
+	
 	// XXX Power settings for CFG_sx1272 are different
+	
+	return;
 }
 
 
@@ -298,13 +301,10 @@ void rxLoraModem()
 // 14. Write buffer (byte by byte)
 // 15. opmode TX
 // ----------------------------------------------------------------------------
-uint32_t txDelay= 100;						// extra delay time on top of server TMST
 
 static void txLoraModem(uint8_t *payLoad, uint8_t payLength, uint32_t tmst,
 						uint8_t powe, uint32_t freq, uint8_t crc, uint8_t iiq)
 {
-#if TEST > 0
-#else
 	if (debug>=1) {
 		Serial.print(F("txLoraModem:: "));
 		Serial.print(F("powe: ")); Serial.print(powe);
@@ -313,7 +313,6 @@ static void txLoraModem(uint8_t *payLoad, uint8_t payLength, uint32_t tmst,
 		Serial.print(F(", iiq: ")); Serial.print(iiq,HEX);
 		Serial.println();
 	}
-#endif
 	
 	// 1. Select LoRa modem from sleep mode
 	opmodeLora();
@@ -359,7 +358,11 @@ static void txLoraModem(uint8_t *payLoad, uint8_t payLength, uint32_t tmst,
 	//opmode(OPMODE_FSTX);	// 0x02
 	
 	// wait extra delay out
-	while (micros() < (tmst + txDelay -10000)) { delay(1); }
+	if ((sf == SF7) || (sf == SF8)) {
+		while (micros() < (tmst + txDelay)) { delay(1); }
+	} else {
+		while (micros() < (tmst + txDelay)) { delay(1); }
+	}
 	
 	// 11, 12, 13, 14. write the buffer to the FiFo
 	sendPkt(payLoad, payLength);
@@ -370,9 +373,9 @@ static void txLoraModem(uint8_t *payLoad, uint8_t payLength, uint32_t tmst,
 	// XXX Intead of handling the interrupt of dio0, we wait it out, Not using delay(1);
 	// for trasmitter this should not be a problem.
 	while(digitalRead(dio0) == 0) {  }						// XXX tx done? handle by interrupt
-#if TEST != 1
+
 	Serial.println(F("txLoraModem:: Data sent"));
-#endif
+
 	// ----- TX SUCCESS, SWITCH BACK TO RX CONTINUOUS --------
 	// Successful TX cycle put's radio in standby mode.
 	
@@ -511,6 +514,8 @@ int sendPacket(uint8_t *buff_down, uint8_t length) {
 	char * bufPtr = (char *) (buff_down);
 	buff_down[length] = 0;
 	
+	if (debug >= 2) Serial.println((char *)buff_down);
+	
 	// Use JSON to decode the string after the first 4 bytes.
 	// The data for the node is in the "data" field. This function destroys original buffer
 	JsonObject& root = jsonBuffer.parseObject(bufPtr);
@@ -557,18 +562,9 @@ int sendPacket(uint8_t *buff_down, uint8_t length) {
 	uint8_t payLoad[payLength];
 	base64_decode((char *) payLoad, (char *) data, strlen(data));
 
-	
-#if TEST > 0
-	Serial.println(F("sendPacket TEST"));
-	// configure LoRa modem with meta data and transmit
-	for (int i=0; i< 20; i++) {
-		txLoraModem(payLoad, payLength, micros(), powe, freq, crc, iiq);
-		delay(50);
-	}
-#else
 	txLoraModem(payLoad, payLength, tmst, powe, freq, crc, iiq);
 	
-	if (fff != freq) {
+	if ((debug >= 2) && (fff != freq)) {
 		Serial.print(F("sendPacket:: WARNING used freq="));
 		Serial.print(freq);
 		Serial.print(F(", freq req="));
@@ -587,15 +583,7 @@ int sendPacket(uint8_t *buff_down, uint8_t length) {
 	}
 	
 	if (debug >=1) {
-		Serial.print(F("TXPKT:: Freq="));
-		Serial.print(ff);
-		Serial.print(F(", modu="));
-		Serial.print(modu);
-		Serial.print(F(", datr="));
-		Serial.print(datr);
-		Serial.print(F(", size="));
-		Serial.print(psize);
-		Serial.print(F(", Trx: "));				// Time received server message
+		Serial.print(F("Trx: "));				// Time received server message
 		Serial.print(trx);
 		Serial.print(F(", Tmst: "));			// Timestamp for rcv window in message
 		Serial.print(tmst);
@@ -605,7 +593,7 @@ int sendPacket(uint8_t *buff_down, uint8_t length) {
 		Serial.print(micros());
 		Serial.println();
 	}
-#endif
+
 	cp_up_pkt_fwd++;
 	
 	return 1;

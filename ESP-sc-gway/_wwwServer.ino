@@ -31,6 +31,10 @@
 #if A_SERVER==1
 
 
+
+
+
+
 // ----------------------------------------------------------------------------
 // Output the 4-byte IP address for easy printing
 // ----------------------------------------------------------------------------
@@ -191,6 +195,19 @@ String WifiServer(char *cmd, char *arg) {
 
 	response +="<br>";
 	response +="<h2>Settings</h2>";
+	response +="<table style=\"max_width: 100%; min-width: 40%; border: 1px solid black; border-collapse: collapse;\" class=\"config_table\">";
+	response +="<tr>";
+	response +="<th style=\"background-color: green; color: white;\">Counter</th>";
+	response +="<th style=\"background-color: green; color: white;\">Value</th>";
+	response +="</tr>";
+	response +="<tr><td style=\"border: 1px solid black;\">SF Setting</td><td style=\"border: 1px solid black;\">"; response += sf; response+="</tr>";
+	response +="<tr><td style=\"border: 1px solid black;\">Frequency</td><td style=\"border: 1px solid black;\">"; response += freq; response+="</tr>";
+	response +="<tr><td style=\"border: 1px solid black;\">Timing Correction</td><td style=\"border: 1px solid black;\">"; response += txDelay; response+="</tr>";
+	response +="<tr><td>&nbsp</td><td> </tr>";
+			
+	response +="</table>";
+
+	
 	response +="Click <a href=\"/RESET\">here</a> to reset statistics<br>";
 
 	response +="Debug level is: "; 

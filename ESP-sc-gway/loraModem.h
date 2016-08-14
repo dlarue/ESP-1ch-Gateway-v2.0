@@ -9,6 +9,8 @@
 //
 // ----------------------------------------------------------------------------------------
 
+// Our code should correct the server timing
+long txDelay= -10000;						// extra delay time on top of server TMST
 
 
 // Frequencies

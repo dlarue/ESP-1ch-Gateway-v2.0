@@ -87,9 +87,7 @@ int dio2  = 3;									// GPIO3, !! NOT CONNECTED IN THIS VERSION
 int RST   = 0;									// GPIO16, D0, not connected
 
 // Set spreading factor (SF7 - SF12)
-sf_t sf = _SPREADING ;
-
-
+sf_t sf 			= _SPREADING ;
 
 // Set location, description and other configuration parameters
 // Defined in ESP-sc_gway.h
@@ -407,6 +405,8 @@ int readUdp(int packetSize, uint8_t * buff_down)
 		Serial.println();
 	break;
 	case PKT_PULL_RESP:	// 0x03 DOWN
+	
+		lastTmst = micros();					// Store the tmst this package was received
 		// Send to the LoRa Node first (timing) and then do messaging
 		if (sendPacket(data, packetSize-4) < 0) {
 			return(-1);

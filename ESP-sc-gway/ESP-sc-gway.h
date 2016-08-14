@@ -21,16 +21,16 @@
 // Array with SSID and password records. Set WPA size to number of entries in array
 #define WPASIZE 6
 static char *wpa[WPASIZE][2] = {
-	{ "wifi1", "wifi1"},
-	{ "wifi2", "wifi2"},
-	{ "wifi3", "wifi3"},
-	{ "wifi4", "wifi4"},
-	{ "wifi5", "wifi5"},
-	{ "wifi6", "wifi6"}
+	{ "Livebox-0e0d", "E2D92F37634C512F712E3DCC1E"},
+	{ "platenspeler", "maanlama@16"},
+	{ "OnePlus2", "maanlama@16"},
+	{ "Leon Br.", "TTB2016wifi"},
+	{ "5GT7SG34KMDJ", "28zg369kLB"},
+	{ "AndroidAP", "eb36a7a18dba"}
 };
 
-// Set the local Gateway settings
-#define _SPREADING SF7							// We receive and sent on this Spreading Factor (only)
+// Set the Server Settings
+#define _SPREADING SF9							// We receive and sent on this Spreading Factor (only)
 #define _LOCUDPPORT 1700						// Often 1701 is used for upstream comms
 
 #define _PULL_INTERVAL 31						// PULL_DATA messages to server to get downstream
@@ -43,16 +43,18 @@ static char *wpa[WPASIZE][2] = {
 #define _TTNSERVER "router.eu.thethings.network"
 
 // Port is UDP port in this program
-//#define _THINGPORT 1701							// Your own UDP server
-//#define _THINGSERVER "yourserver.com"			// Server URL of the server
+//#define _THINGPORT 5001						// pir; 
+//#define _THINGPORT 1700						// ttb.things4u.eu
+#define _THINGPORT 1701							// dash.things4u.eu
+#define _THINGSERVER "westenberg.org"			// Server URL of the LoRa-udp.js program
 
 // Gateway Ident definitions
-#define _DESCRIPTION "ESP 1ch Gateway"
+#define _DESCRIPTION "ESP Gateway"
 #define _EMAIL "mw12554@hotmail.com"
 #define _PLATFORM "ESP8266"
-#define _LAT 0.00
-#define _LON 0.00
-#define _ALT 0
+#define _LAT 52.237367
+#define _LON 5.978654
+#define _ALT 4
 
 								
 // Definitions for the admin webserver
