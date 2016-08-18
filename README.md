@@ -1,22 +1,28 @@
 #Single Channel LoRaWAN Gateway
 
-
 Version 2.0, August 13, 2016
 Author: M Westenberg (mw12554@hotmail.com)
 Copyright: M Westenberg (mw12554@hotmail.com)
 
 This repository contains a proof-of-concept implementation of a single
 channel LoRaWAN gateway. It has been tested on the Wemos D1 Mini, using a 
-HopeRF RFM95W transceiver.  
-The node used is based on a TeensyLC.
+HopeRF RFM95W transceiver.  The nodes tested are:
+- TeensyLC with HopeRF RFM95 radio
+- Arduino Pro-Mini (default Armega328 model, 8MHz 3.3V)
+
+###Note
+
+There seems to be a lot of variation in Arduino Pro-Mini devices. I have at least 4 different types. 
+Some work, and some do not work with the 1ch Gateway mostly due to timing issues so it seems.
+The standard 8MHz type with the large chrystal on board seems to be working best.
 
 The code is for testing and development purposes only, and is not meant 
 for production usage yet. 
 
-The software is originally based on code base of Single Channel gateway for RaspberryPI
+Version 1 was originally based on code base of Single Channel gateway for RaspberryPI
 which was developed by Thomas Telkamp. Code was ported and extended to run on ESP 8266 
 mcu and provide RTC, Webserver and DNS services.
-Version 2.0 adds several enhancements and part have been completely redisigned.
+Version 2.0 adds several enhancements and part have been completely redesigned.
 Changes include two-way traffic. The code is also slit over multiple source files
 which makes editing easier.
 
@@ -25,25 +31,27 @@ Maintained by Maarten Westenberg (mw12554@hotmail.com)
 ##Features
 
 - Supports ABP nodes (TeensyLC and Arduino Pro-mini)
+- Supports OTAA functions on TeensyLC and Arduino Pro-Mini (not all of them).
 - Supports SF7, SF8. SF7 is tested for downstream communication
-- listen on configurable frequency and spreading factor
-- status updates
+- Listens on configurable frequency and spreading factor
+- Send status updates to server (keepalive)
 - PULL_DATA messages to server
-- It can forward messages to two servers
+- It can forward messages to two servers at the same time (and read from them as well)
 - DNS support for server lookup
 - NTP Support for time sync with internet time servers
 - Webserver support (default port 8080)
 - .h header file for configuration
 
 Not (yet) supported:
-- PACKET_PUSH_ACK processing
+
 - SF7BW250 modulation
 - FSK modulation
 - SF9-SF12 rates not tested yet
 
 ##Dependencies
 
-The software is dependent on several pieces of software, the Ardiuino IDE for ESP8266 being the most important.
+The software is dependent on several pieces of software, the Ardiuino IDE for ESP8266 
+being the most important.
 Several other libraries are also used by this program:
 
 - gBase64 library, The gBase library is actually a base64 library made 
