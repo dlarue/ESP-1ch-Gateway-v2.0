@@ -27,7 +27,7 @@ static char *wpa[WPASIZE][2] = {
 	{ "noot", "wagen"},
 	{ "truus.", "try"},
 	{ "greet", "noot"},
-	{ "karlijn", "tje"}
+	{ "karlijn", "hooi"}
 };
 
 // Set the Server Settings
@@ -44,8 +44,6 @@ static char *wpa[WPASIZE][2] = {
 #define _TTNSERVER "router.eu.thethings.network"
 
 // Port is UDP port in this program
-//#define _THINGPORT 5001						// pir; 
-//#define _THINGPORT 1700						// ttb.things4u.eu
 #define _THINGPORT 1701							// dash.things4u.eu
 #define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
 
