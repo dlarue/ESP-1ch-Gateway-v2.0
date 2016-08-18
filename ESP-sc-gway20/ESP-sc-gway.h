@@ -15,7 +15,7 @@
 								// For operational use, set initial DEBUG vaulue 0
 
 #define CFG_sx1276_radio		// Define the correct radio type that you are using
-//#define CFG_sx1272_radio
+//#define CFG_sx1272_radio		// sx1272 not supported yet
 					
 // Wifi definitions
 // Array with SSID and password records. Set WPA size to number of entries in array
