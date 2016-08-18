@@ -1,12 +1,13 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
 
-#include <gtest/gtest.h>
-#define ARDUINOJSON_ENABLE_STD_STREAM
 #include <ArduinoJson.h>
+#include <gtest/gtest.h>
+#include <stdint.h>
 
 class JsonArray_Subscript_Tests : public ::testing::Test {
  protected:
@@ -32,6 +33,15 @@ TEST_(StoreInteger) {
   EXPECT_FALSE(_array[0].is<double>());
 }
 
+#if ARDUINOJSON_USE_LONG_LONG || ARDUINOJSON_USE_INT64
+TEST_(StoreLongLong) {
+  _array[0] = 9223372036854775807;
+  EXPECT_EQ(9223372036854775807, _array[0].as<long long>());
+  EXPECT_TRUE(_array[0].is<int>());
+  EXPECT_FALSE(_array[0].is<double>());
+}
+#endif
+
 TEST_(StoreDouble) {
   _array[0] = 123.45;
   EXPECT_EQ(123.45, _array[0].as<double>());
@@ -49,6 +59,7 @@ TEST_(StoreBoolean) {
 TEST_(StoreString) {
   _array[0] = "hello";
   EXPECT_STREQ("hello", _array[0].as<const char*>());
+  EXPECT_STREQ("hello", _array[0].as<char*>());  // <- short hand
   EXPECT_TRUE(_array[0].is<const char*>());
   EXPECT_FALSE(_array[0].is<int>());
 }
@@ -59,6 +70,9 @@ TEST_(StoreNestedArray) {
   _array[0] = arr;
 
   EXPECT_EQ(&arr, &_array[0].as<JsonArray&>());
+  EXPECT_EQ(&arr, &_array[0].as<JsonArray>());  // <- short hand
+  EXPECT_EQ(&arr, &_array[0].as<const JsonArray&>());
+  EXPECT_EQ(&arr, &_array[0].as<const JsonArray>());  // <- short hand
   EXPECT_TRUE(_array[0].is<JsonArray&>());
   EXPECT_FALSE(_array[0].is<int>());
 }
@@ -69,6 +83,9 @@ TEST_(StoreNestedObject) {
   _array[0] = obj;
 
   EXPECT_EQ(&obj, &_array[0].as<JsonObject&>());
+  EXPECT_EQ(&obj, &_array[0].as<JsonObject>());  // <- short hand
+  EXPECT_EQ(&obj, &_array[0].as<const JsonObject&>());
+  EXPECT_EQ(&obj, &_array[0].as<const JsonObject>());  // <- short hand
   EXPECT_TRUE(_array[0].is<JsonObject&>());
   EXPECT_FALSE(_array[0].is<int>());
 }

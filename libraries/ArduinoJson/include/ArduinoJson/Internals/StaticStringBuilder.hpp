@@ -1,12 +1,13 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
 
 #pragma once
 
-#include "../Arduino/Print.hpp"
+#include "../Print.hpp"
 
 namespace ArduinoJson {
 namespace Internals {
@@ -19,7 +20,13 @@ class StaticStringBuilder : public Print {
     buffer[0] = '\0';
   }
 
-  virtual size_t write(uint8_t c);
+  virtual size_t write(uint8_t c) {
+    if (length >= capacity) return 0;
+
+    buffer[length++] = c;
+    buffer[length] = '\0';
+    return 1;
+  }
 
  private:
   char *buffer;

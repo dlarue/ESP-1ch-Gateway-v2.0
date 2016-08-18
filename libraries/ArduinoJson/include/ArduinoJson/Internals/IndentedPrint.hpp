@@ -1,12 +1,13 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
 
 #pragma once
 
-#include "../Arduino/Print.hpp"
+#include "../Print.hpp"
 
 namespace ArduinoJson {
 namespace Internals {
@@ -22,7 +23,13 @@ class IndentedPrint : public Print {
     isNewLine = true;
   }
 
-  virtual size_t write(uint8_t);
+  virtual size_t write(uint8_t c) {
+    size_t n = 0;
+    if (isNewLine) n += writeTabs();
+    n += sink->write(c);
+    isNewLine = c == '\n';
+    return n;
+  }
 
   // Adds one level of indentation
   void indent() {
@@ -45,7 +52,11 @@ class IndentedPrint : public Print {
   uint8_t tabSize : 3;
   bool isNewLine : 1;
 
-  size_t writeTabs();
+  size_t writeTabs() {
+    size_t n = 0;
+    for (int i = 0; i < level * tabSize; i++) n += sink->write(' ');
+    return n;
+  }
 
   static const int MAX_LEVEL = 15;    // because it's only 4 bits
   static const int MAX_TAB_SIZE = 7;  // because it's only 3 bits

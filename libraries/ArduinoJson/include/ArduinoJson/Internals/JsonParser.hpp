@@ -1,8 +1,9 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
 
 #pragma once
 
@@ -26,6 +27,12 @@ class JsonParser {
   JsonArray &parseArray();
   JsonObject &parseObject();
 
+  JsonVariant parseVariant() {
+    JsonVariant result;
+    parseAnythingTo(&result);
+    return result;
+  }
+
  private:
   bool skip(char charToSkip);
 
@@ -36,6 +43,19 @@ class JsonParser {
   inline bool parseArrayTo(JsonVariant *destination);
   inline bool parseObjectTo(JsonVariant *destination);
   inline bool parseStringTo(JsonVariant *destination);
+
+  static inline bool isInRange(char c, char min, char max) {
+    return min <= c && c <= max;
+  }
+
+  static inline bool isLetterOrNumber(char c) {
+    return isInRange(c, '0', '9') || isInRange(c, 'a', 'z') ||
+           isInRange(c, 'A', 'Z') || c == '-' || c == '.';
+  }
+
+  static inline bool isQuote(char c) {
+    return c == '\'' || c == '\"';
+  }
 
   JsonBuffer *_buffer;
   const char *_readPtr;

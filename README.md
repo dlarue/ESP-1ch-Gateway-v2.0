@@ -7,7 +7,8 @@ Copyright: M Westenberg (mw12554@hotmail.com)
 
 This repository contains a proof-of-concept implementation of a single
 channel LoRaWAN gateway. It has been tested on the Wemos D1 Mini, using a 
-HopeRF RFM95W transceiver.
+HopeRF RFM95W transceiver.  
+The node used is based on a TeensyLC.
 
 The code is for testing and development purposes only, and is not meant 
 for production usage yet. 
@@ -23,8 +24,9 @@ Maintained by Maarten Westenberg (mw12554@hotmail.com)
 
 Features
 --------
+- Supports ABP nodes (TeensyLC and Arduino Pro-mini)
+- Supports SF7, SF8. SF7 is tested for downstream communication
 - listen on configurable frequency and spreading factor
-- SF7, SF8. SF7 is tested for downstream communication
 - status updates
 - PULL_DATA messages to server
 - It can forward messages to two servers
@@ -37,7 +39,7 @@ Not (yet) supported:
 - PACKET_PUSH_ACK processing
 - SF7BW250 modulation
 - FSK modulation
-
+- SF9-SF12 rates not tested yet
 
 Dependencies
 ------------
@@ -92,6 +94,14 @@ Make sure that you set:
   40.114.249.243, port 1700 
   
 Edit .h file (ESP-sc-gway.h) to change configuration (look for: "Configure these values!").
+
+##Notes
+
+The Gateay timestamps are according to the LoRa specification: 
+- Receive_Delay1 1s
+- Receive Delay2	2s (starting after Receive_Delay1)
+- Join_Accept_Delay1 5s
+- Join_Accept_Delay2 6s
 
 
 License

@@ -1,12 +1,14 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
+
+#include <ArduinoJson.h>
 
 #include <gtest/gtest.h>
-#define ARDUINOJSON_ENABLE_STD_STREAM
-#include <ArduinoJson.h>
+#include <stdint.h>
 
 static const char* null = 0;
 
@@ -28,6 +30,11 @@ TEST(JsonVariant_As_Tests, DoubleAsString) {
 TEST(JsonVariant_As_Tests, DoubleAsLong) {
   JsonVariant variant = 4.2;
   ASSERT_EQ(4L, variant.as<long>());
+}
+
+TEST(JsonVariant_As_Tests, DoubleAsUnsigned) {
+  JsonVariant variant = 4.2;
+  ASSERT_EQ(4U, variant.as<unsigned>());
 }
 
 TEST(JsonVariant_As_Tests, DoubleZeroAsBool) {
@@ -57,7 +64,7 @@ TEST(JsonVariant_As_Tests, FalseAsLong) {
 
 TEST(JsonVariant_As_Tests, FalseAsString) {
   JsonVariant variant = false;
-  ASSERT_EQ(String("0"), variant.as<String>());
+  ASSERT_EQ(String("false"), variant.as<String>());
 }
 
 TEST(JsonVariant_As_Tests, TrueAsBool) {
@@ -77,7 +84,7 @@ TEST(JsonVariant_As_Tests, TrueAsLong) {
 
 TEST(JsonVariant_As_Tests, TrueAsString) {
   JsonVariant variant = true;
-  ASSERT_EQ(String("1"), variant.as<String>());
+  ASSERT_EQ(String("true"), variant.as<String>());
 }
 
 TEST(JsonVariant_As_Tests, LongAsBool) {
@@ -90,9 +97,14 @@ TEST(JsonVariant_As_Tests, LongZeroAsBool) {
   ASSERT_FALSE(variant.as<bool>());
 }
 
-TEST(JsonVariant_As_Tests, LongAsDouble) {
+TEST(JsonVariant_As_Tests, PositiveLongAsDouble) {
   JsonVariant variant = 42L;
   ASSERT_EQ(42.0, variant.as<double>());
+}
+
+TEST(JsonVariant_As_Tests, NegativeLongAsDouble) {
+  JsonVariant variant = -42L;
+  ASSERT_EQ(-42.0, variant.as<double>());
 }
 
 TEST(JsonVariant_As_Tests, LongAsString) {
@@ -135,6 +147,18 @@ TEST(JsonVariant_As_Tests, NumberStringAsLong) {
   ASSERT_EQ(42L, variant.as<long>());
 }
 
+#if ARDUINOJSON_USE_LONG_LONG || ARDUINOJSON_USE_INT64
+TEST(JsonVariant_As_Tests, NumberStringAsInt64Negative) {
+  JsonVariant variant = "-9223372036854775808";
+  ASSERT_EQ(-9223372036854775807 - 1, variant.as<long long>());
+}
+
+TEST(JsonVariant_As_Tests, NumberStringAsInt64Positive) {
+  JsonVariant variant = "9223372036854775807";
+  ASSERT_EQ(9223372036854775807, variant.as<long long>());
+}
+#endif
+
 TEST(JsonVariant_As_Tests, RandomStringAsBool) {
   JsonVariant variant = "hello";
   ASSERT_FALSE(variant.as<bool>());
@@ -143,6 +167,16 @@ TEST(JsonVariant_As_Tests, RandomStringAsBool) {
 TEST(JsonVariant_As_Tests, RandomStringAsLong) {
   JsonVariant variant = "hello";
   ASSERT_EQ(0L, variant.as<long>());
+}
+
+TEST(JsonVariant_As_Tests, RandomStringAsConstCharPtr) {
+  JsonVariant variant = "hello";
+  ASSERT_STREQ("hello", variant.as<const char*>());
+}
+
+TEST(JsonVariant_As_Tests, RandomStringAsCharPtr) {
+  JsonVariant variant = "hello";
+  ASSERT_STREQ("hello", variant.as<char*>());
 }
 
 TEST(JsonVariant_As_Tests, RandomStringAsString) {
@@ -179,4 +213,22 @@ TEST(JsonVariant_As_Tests, ArrayAsString) {
 
   JsonVariant variant = arr;
   ASSERT_EQ(String("[4,2]"), variant.as<String>());
+}
+
+TEST(JsonVariant_As_Tests, ArrayAsJsonArray) {
+  DynamicJsonBuffer buffer;
+  JsonArray& arr = buffer.createArray();
+
+  JsonVariant variant = arr;
+  ASSERT_EQ(&arr, &variant.as<JsonArray&>());
+  ASSERT_EQ(&arr, &variant.as<JsonArray>());  // <- shorthand
+}
+
+TEST(JsonVariant_As_Tests, ObjectAsJsonObject) {
+  DynamicJsonBuffer buffer;
+  JsonObject& arr = buffer.createObject();
+
+  JsonVariant variant = arr;
+  ASSERT_EQ(&arr, &variant.as<JsonObject&>());
+  ASSERT_EQ(&arr, &variant.as<JsonObject>());  // <- shorthand
 }

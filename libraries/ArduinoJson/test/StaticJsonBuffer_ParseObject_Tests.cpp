@@ -1,17 +1,22 @@
-// Copyright Benoit Blanchon 2014-2015
+// Copyright Benoit Blanchon 2014-2016
 // MIT License
 //
 // Arduino JSON library
 // https://github.com/bblanchon/ArduinoJson
+// If you like this project, please add a star!
 
 #include <gtest/gtest.h>
 #include <ArduinoJson.h>
 
 class StaticJsonBuffer_ParseObject_Tests : public testing::Test {
  protected:
-  void with(JsonBuffer& jsonBuffer) { _jsonBuffer = &jsonBuffer; }
+  void with(JsonBuffer& jsonBuffer) {
+    _jsonBuffer = &jsonBuffer;
+  }
 
-  void whenInputIs(const char* json) { strcpy(_jsonString, json); }
+  void whenInputIs(const char* json) {
+    strcpy(_jsonString, json);
+  }
 
   void parseMustSucceed() {
     EXPECT_TRUE(_jsonBuffer->parseObject(_jsonString).success());
@@ -73,9 +78,12 @@ TEST_F(StaticJsonBuffer_ParseObject_Tests,
 }
 
 TEST_F(StaticJsonBuffer_ParseObject_Tests, CharPtrNull) {
-  ASSERT_FALSE(StaticJsonBuffer<100>().parseObject((char*)0).success());
+  ASSERT_FALSE(
+      StaticJsonBuffer<100>().parseObject(static_cast<char*>(0)).success());
 }
 
 TEST_F(StaticJsonBuffer_ParseObject_Tests, ConstCharPtrNull) {
-  ASSERT_FALSE(StaticJsonBuffer<100>().parseObject((const char*)0).success());
+  ASSERT_FALSE(StaticJsonBuffer<100>()
+                   .parseObject(static_cast<const char*>(0))
+                   .success());
 }
