@@ -61,6 +61,9 @@ Several other libraries are also used by this program:
 - Arduino JSON; Needed to decode downstream messages
 - SimpleTimer; ot yet used, but reserved for interrupt and timing
 
+For simplicity, the libraries are also found in this gitshub repository in the libraries directory. 
+However, these libraries are not part of the single-channel Gateway software.
+
 ##Connections
 
 See http://things4u.github.io in the hardware section for building
@@ -74,7 +77,7 @@ The most important things to configure to your own environment are:
 - static char *wpa[WPASIZE][2] contains the array of known WiFi access points the Gateway will connect to.
 Make sure that the dimensions of the array are correctly defined in the WPASIZE settings. 
 - Only the sx1276 (and HopeRF 95) radio modules are supported at this time. The sx1272 code should be 
-working without much works, but as I do not have one of these modules available I cannot test this.
+working without much work, but as I do not have one of these modules available I cannot test this.
 - This software allows to connect to 2 servers at the same time (as most gateways do BTW). 
 Make sure that you set:
 
