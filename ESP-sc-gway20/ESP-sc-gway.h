@@ -21,13 +21,13 @@
 // Array with SSID and password records. Set WPA size to number of entries in array
 #define WPASIZE 7
 static char *wpa[WPASIZE][2] = {
-	{ "platenspeler", "maanlama@16"},
-	{ "Maarten-in", "Apeldoorn47"},
-	{ "Livebox-0e0d", "E2D92F37634C512F712E3DCC1E"},
-	{ "OnePlus2", "maanlama@16"},
-	{ "Leon Br.", "TTB2016wifi"},
-	{ "5GT7SG34KMDJ", "28zg369kLB"},
-	{ "AndroidAP", "eb36a7a18dba"}
+	{ "aap", "noot"},
+	{ "mies", "schapen"},
+	{ "teun", "vuur"},
+	{ "noot", "wagen"},
+	{ "truus.", "try"},
+	{ "greet", "noot"},
+	{ "karlijn", "tje"}
 };
 
 // Set the Server Settings
@@ -47,14 +47,14 @@ static char *wpa[WPASIZE][2] = {
 //#define _THINGPORT 5001						// pir; 
 //#define _THINGPORT 1700						// ttb.things4u.eu
 #define _THINGPORT 1701							// dash.things4u.eu
-#define _THINGSERVER "westenberg.org"			// Server URL of the LoRa-udp.js program
+#define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
 
 // Gateway Ident definitions
 #define _DESCRIPTION "ESP Gateway"
-#define _EMAIL "mw12554@hotmail.com"
+#define _EMAIL "youremail@gmail.com"
 #define _PLATFORM "ESP8266"
-#define _LAT 52.237367
-#define _LON 5.978654
+#define _LAT 52.00
+#define _LON 5.000
 #define _ALT 4
 
 								
