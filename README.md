@@ -22,8 +22,8 @@ which makes editing easier.
 
 Maintained by Maarten Westenberg (mw12554@hotmail.com)
 
-Features
---------
+##Features
+
 - Supports ABP nodes (TeensyLC and Arduino Pro-mini)
 - Supports SF7, SF8. SF7 is tested for downstream communication
 - listen on configurable frequency and spreading factor
@@ -41,8 +41,8 @@ Not (yet) supported:
 - FSK modulation
 - SF9-SF12 rates not tested yet
 
-Dependencies
-------------
+##Dependencies
+
 The software is dependent on several pieces of software, the Ardiuino IDE for ESP8266 being the most important.
 Several other libraries are also used by this program:
 
@@ -53,13 +53,13 @@ Several other libraries are also used by this program:
 - Arduino JSON; Needed to decode downstream messages
 - SimpleTimer; ot yet used, but reserved for interrupt and timing
 
-Connections
------------
+##Connections
+
 See http://things4u.github.io in the hardware section for building
 and connection instructions
 
-Configuration
--------------
+##Configuration
+
 All user configurable settings are put in the ESP-sc-gway.h file as much as possible.
 The most important things to configure to your own environment are:
 
@@ -104,8 +104,8 @@ The Gateay timestamps are according to the LoRa specification:
 - Join_Accept_Delay2 6s
 
 
-License
--------
+##License
+
 The source files in this repository are made available under the Eclipse
 Public License v1.0, except for the base64 implementation, that has been
 copied from the Semtech Packet Forwader.
