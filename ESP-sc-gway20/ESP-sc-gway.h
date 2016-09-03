@@ -21,13 +21,13 @@
 // Array with SSID and password records. Set WPA size to number of entries in array
 #define WPASIZE 7
 static char *wpa[WPASIZE][2] = {
-	{ "aap", "noot"},
-	{ "mies", "schapen"},
-	{ "teun", "vuur"},
-	{ "noot", "wagen"},
-	{ "truus.", "try"},
-	{ "greet", "noot"},
-	{ "karlijn", "hooi"}
+  { "aap", "noot"},
+  { "mies", "schapen"},
+  { "teun", "vuur"},
+  { "noot", "wagen"},
+  { "truus.", "try"},
+  { "greet", "noot"},
+  { "karlijn", "hooi"}
 };
 
 // Set the Server Settings
@@ -41,19 +41,28 @@ static char *wpa[WPASIZE][2] = {
 // MQTT definitions
 #define _TTNPORT 1700
 //#define _TTNSERVER "router.eu.staging.thethings.network"
-#define _TTNSERVER "router.eu.thethings.network"
+#define _TTNSERVER "router.us.thethings.network" //DJL "router.eu.thethings.network"
 
 // Port is UDP port in this program
 #define _THINGPORT 1701							// dash.things4u.eu
 #define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
 
 // Gateway Ident definitions
-#define _DESCRIPTION "ESP Gateway"
-#define _EMAIL "youremail@gmail.com"
+#define _DESCRIPTION "SanDiego NodeMCU PB-01 Test Gateway"
+#define _EMAIL "doug.larue@gmail.com" // "tom@lafleur.us"
 #define _PLATFORM "ESP8266"
-#define _LAT 52.00
-#define _LON 5.000
-#define _ALT 4
+#define _LAT 32.7946334    //Doug
+#define _LON -117.2443025 //Doug
+//#define _LAT 32.984709  //Tom
+////#define _LON -117.178966  //Tom
+#define _ALT 100
+//ORG
+//#define _DESCRIPTION "ESP Gateway"
+//#define _EMAIL "youremail@gmail.com"
+//#define _PLATFORM "ESP8266"
+//#define _LAT 52.00
+//#define _LON 5.000
+//#define _ALT 4
 
 								
 // Definitions for the admin webserver
