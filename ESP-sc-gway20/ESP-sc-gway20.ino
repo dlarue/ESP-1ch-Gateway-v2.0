@@ -35,7 +35,7 @@
 #include <sys/time.h>
 #include <cstring>
 #include <SPI.h>
-#include <TimeLib.h>								// http://playground.arduino.cc/code/time
+#include "TimeLib.h" //DJL <TimeLib.h>  // http://playground.arduino.cc/code/time
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <WiFiUdp.h>
@@ -46,20 +46,20 @@ extern "C" {
 }
 #include <pins_arduino.h>
 #include <ArduinoJson.h>
-#include <SimpleTimer.h>
-#include <gBase64.h>							// https://github.com/adamvr/arduino-base64 (I changed the name)
+#include "SimpleTimer.h" //DJL <SimpleTimer.h>
+#include "Base64.h" //DJL <Base64.h>  // https://github.com/adamvr/arduino-base64 
 
 #include "loraModem.h"
-#include "ESP-sc-gway.h"						// This file contains configuration of GWay
+#include "ESP-sc-gway.h"   // This file contains configuration of GWay
 
-int debug=1;									// Debug level! 0 is no msgs, 1 normal, 2 is extensive
+int debug=1;	// Debug level! 0 is no msgs, 1 normal, 2 is extensive
 
 using namespace std;
 
 byte currentMode = 0x81;
 uint8_t message[256];
 char b64[256];
-bool sx1272 = true;								// Actually we use sx1276/RFM95
+bool sx1272 = true;	// Actually we use sx1276/RFM95
 byte receivedbytes;
 
 uint32_t cp_nb_rx_rcv;
@@ -80,41 +80,41 @@ char MAC_char[18];
  *******************************************************************************/
 
 // SX1276 - ESP8266 connections
-int ssPin = 15;									// GPIO15, D8
-int dio0  = 5;									// GPIO5,  D1
-int dio1  = 4;									// GPIO4,  D2
-int dio2  = 3;									// GPIO3, !! NOT CONNECTED IN THIS VERSION
-int RST   = 0;									// GPIO16, D0, not connected
+int ssPin = 2;  //DJL 15; // GPIO15, D8
+int dio0  = 15; //DJL 5;  // GPIO5,  D1
+int dio1  = 4;            // GPIO4,  D2
+int dio2  = 3;            // GPIO3, !! NOT CONNECTED IN THIS VERSION
+int RST   = 0;            // GPIO16, D0, not connected
 
 // Set spreading factor (SF7 - SF12)
-sf_t sf 			= _SPREADING ;
+sf_t sf	= _SPREADING ;
 
 // Set location, description and other configuration parameters
 // Defined in ESP-sc_gway.h
 //
-float lat			= _LAT;						// Configuration specific info...
-float lon			= _LON;
-int   alt			= _ALT;
-char platform[24]	= _PLATFORM; 				// platform definition
-char email[40]		= _EMAIL;    				// used for contact email
-char description[64]= _DESCRIPTION;				// used for free form description 
+float lat		= _LAT;  // Configuration specific info...
+float lon		= _LON;
+int   alt		= _ALT;
+char platform[24]	= _PLATFORM; // platform definition
+char email[40]		= _EMAIL;    // used for contact email
+char description[64]= _DESCRIPTION;  // used for free form description 
 
 // define servers
 
-IPAddress ntpServer;							// IP address of NTP_TIMESERVER
-IPAddress ttnServer;							// IP Address of thethingsnetwork server
+IPAddress ntpServer; // IP address of NTP_TIMESERVER
+IPAddress ttnServer; // IP Address of thethingsnetwork server
 IPAddress thingServer;
 
 WiFiUDP Udp;
-uint32_t stattime = 0;							// last time we sent a stat message to server
-uint32_t pulltime = 0;							// last time we sent a pull_data request to server
+uint32_t stattime = 0;	// last time we sent a stat message to server
+uint32_t pulltime = 0;	// last time we sent a pull_data request to server
 uint32_t lastTmst = 0;
 
-SimpleTimer timer; 								// Timer is needed for delayed sending
+SimpleTimer timer; 	// Timer is needed for delayed sending
 
 // You can switch webserver off if not necessary but probably better to leave it in.
 #if A_SERVER==1
-#include <Streaming.h>          				// http://arduiniana.org/libraries/streaming/
+#include "Streaming.h" //DJL <Streaming.h> // http://arduiniana.org/libraries/streaming/
   String webPage;
   ESP8266WebServer server(SERVERPORT);
 #endif
@@ -122,11 +122,11 @@ SimpleTimer timer; 								// Timer is needed for delayed sending
 
 
 
-#define TX_BUFF_SIZE  2048						// Upstream buffer to send to MQTT
-#define RX_BUFF_SIZE  1024						// Downstream received from MQTT
-#define STATUS_SIZE	  512						// This should(!) be enough based on the static text part.. was 1024
+#define TX_BUFF_SIZE  2048    // Upstream buffer to send to MQTT
+#define RX_BUFF_SIZE  1024    // Downstream received from MQTT
+#define STATUS_SIZE    512    // This should(!) be enough based on the static text part.. was 1024
 
-uint8_t buff_up[TX_BUFF_SIZE]; 					// buffer to compose the upstream packet
+uint8_t buff_up[TX_BUFF_SIZE]; // buffer to compose the upstream packet
 uint8_t buff_down[RX_BUFF_SIZE];
 uint16_t lastToken = 0x00;
 
@@ -140,7 +140,7 @@ void die(const char *s)
 {
     Serial.println(s);
 	delay(50);
-	// system_restart();						// SDK function
+	// system_restart();	// SDK function
 	// ESP.reset();				
 	abort();									// Within a second
 }
