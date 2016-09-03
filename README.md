@@ -1,5 +1,11 @@
 #Single Channel LoRaWAN Gateway
 
+Version 2.1, September 03, 2016
+Author: D LaRue (doug.larue@gmail.com)
+
+Customized for USA usage and Channel 0 frequency
+Tested and verified with a NodeMCU and RFM95W with a The Things Uno client node.
+
 Version 2.0, August 13, 2016
 Author: M Westenberg (mw12554@hotmail.com)
 Copyright: M Westenberg (mw12554@hotmail.com)
