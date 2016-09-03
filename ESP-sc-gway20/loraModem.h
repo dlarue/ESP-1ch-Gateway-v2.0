@@ -16,7 +16,12 @@ long txDelay= 0000;								// extra delay time on top of server TMST
 // Frequencies
 // Set center frequency. If in doubt, choose the first one, comment all others
 // Each "real" gateway should support the first 3 frequencies according to LoRa spec.
-uint32_t  freq = 868100000; 					// Channel 0, 868.1 MHz
+//
+// USA
+uint32_t  freq =   902300000;   // Channel 0, 902.3MHz //DJL
+
+// EU
+//uint32_t  freq = 868100000; 					// Channel 0, 868.1 MHz
 //uint32_t  freq = 868300000; 					// Channel 1, 868.3 MHz
 //uint32_t  freq = 868500000; 					// in Mhz! (868.5)
 //uint32_t  freq = 867100000; 					// in Mhz! (867.1)
@@ -45,24 +50,24 @@ uint32_t  freq = 868100000; 					// Channel 0, 868.1 MHz
 #define REG_IRQ_FLAGS_MASK          0x11
 #define REG_IRQ_FLAGS               0x12
 #define REG_RX_NB_BYTES             0x13
-#define REG_PKT_SNR_VALUE			0x19
+#define REG_PKT_SNR_VALUE           0x19
 #define REG_MODEM_CONFIG1           0x1D
 #define REG_MODEM_CONFIG2           0x1E
-#define REG_SYMB_TIMEOUT_LSB  		0x1F
+#define REG_SYMB_TIMEOUT_LSB        0x1F
 
 #define REG_PAYLOAD_LENGTH          0x22
-#define REG_MAX_PAYLOAD_LENGTH 		0x23
+#define REG_MAX_PAYLOAD_LENGTH 	    0x23
 #define REG_HOP_PERIOD              0x24
 #define REG_MODEM_CONFIG3           0x26
 
-#define REG_INVERTIQ				0x33
-#define REG_SYNC_WORD				0x39
+#define REG_INVERTIQ                0x33
+#define REG_SYNC_WORD               0x39
 
 #define REG_DIO_MAPPING_1           0x40
 #define REG_DIO_MAPPING_2           0x41
-#define REG_VERSION	  				0x42
+#define REG_VERSION	            0x42
 
-#define REG_PADAC					0x5A
+#define REG_PADAC                   0x5A
 
 // ----------------------------------------
 // Used by REG_PAYLOAD_LENGTH to set receive patyload lenth
@@ -96,7 +101,7 @@ uint32_t  freq = 868100000; 					// Channel 0, 868.1 MHz
 #define REG_LNA                     0x0C
 #define LNA_MAX_GAIN                0x23
 #define LNA_OFF_GAIN                0x00
-#define LNA_LOW_GAIN		    	0x20
+#define LNA_LOW_GAIN		    0x20
 
 // CONF REG
 #define REG1                        0x0A
@@ -105,7 +110,7 @@ uint32_t  freq = 868100000; 					// Channel 0, 868.1 MHz
 // ----------------------------------------
 // MC2 definitions
 #define SX72_MC2_FSK                0x00
-#define SX72_MC2_SF7                0x70		// SF7 == 0x07, so (SF7<<4) == SX7_MC2_SF7
+#define SX72_MC2_SF7                0x70  // SF7 == 0x07, so (SF7<<4) == SX7_MC2_SF7
 #define SX72_MC2_SF8                0x80
 #define SX72_MC2_SF9                0x90
 #define SX72_MC2_SF10               0xA0
