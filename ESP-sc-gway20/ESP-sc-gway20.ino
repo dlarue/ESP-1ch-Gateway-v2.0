@@ -748,14 +748,12 @@ void setup () {
     // display results of getting hardware address
 	// 
     Serial.print("Gateway ID: ");
-    Serial.print(MAC_array[0],HEX);
-    Serial.print(MAC_array[1],HEX);
-    Serial.print(MAC_array[2],HEX);
-	Serial.print(0xFF, HEX);
-	Serial.print(0xFF, HEX);
-    Serial.print(MAC_array[3],HEX);
-    Serial.print(MAC_array[4],HEX);
-    Serial.print(MAC_array[5],HEX);
+    char buf[16];
+    WiFi.macAddress(MAC_array);
+    sprintf(buf, "%02x%02x%02xffff%02x%02x%02x", \
+        MAC_array[0],MAC_array[1],MAC_array[2],MAC_array[3],MAC_array[4],MAC_array[5]);
+    Serial.print(buf);
+
 
     Serial.print(", Listening at SF");
 	Serial.print(sf);

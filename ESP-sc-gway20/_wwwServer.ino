@@ -172,13 +172,10 @@ String WifiServer(char *cmd, char *arg) {
 	response +="<tr><td style=\"border: 1px solid black;\">Frequency</td><td style=\"border: 1px solid black;\">"; response+=freq; response+="</tr>";
 	response +="<tr><td style=\"border: 1px solid black;\">Spreading Factor</td><td style=\"border: 1px solid black;\">"; response+=sf; response+="</tr>";
 	response +="<tr><td style=\"border: 1px solid black;\">Gateway ID</td><td style=\"border: 1px solid black;\">";	
-	response +=String(MAC_array[0],HEX);									// The MAC array is always returned in lowercase
-	response +=String(MAC_array[1],HEX); 
-	response +=String(MAC_array[2],HEX); 
-	response +="ffff"; 
-	response +=String(MAC_array[3],HEX); 
-	response +=String(MAC_array[4],HEX); 
-	response +=String(MAC_array[5],HEX);
+  char buf[16]; //DJL
+  sprintf(buf, "%02x%02x%02xffff%02x%02x%02x", \
+     MAC_array[0],MAC_array[1],MAC_array[2],MAC_array[3],MAC_array[4],MAC_array[5]);
+  response += buf;
 	response+="</tr>";
 	response +="</table>";
 		
