@@ -48,15 +48,6 @@ static char *wpa[WPASIZE][2] = {
 #define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
 
 // Gateway Ident definitions
-#define _DESCRIPTION "SanDiego NodeMCU PB-01 Test Gateway"
-#define _EMAIL "doug.larue@gmail.com" // "tom@lafleur.us"
-#define _PLATFORM "ESP8266"
-#define _LAT 32.7946334    //Doug
-#define _LON -117.2443025 //Doug
-//#define _LAT 32.984709  //Tom
-////#define _LON -117.178966  //Tom
-#define _ALT 100
-//ORG
 //#define _DESCRIPTION "ESP Gateway"
 //#define _EMAIL "youremail@gmail.com"
 //#define _PLATFORM "ESP8266"
