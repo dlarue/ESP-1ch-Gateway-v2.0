@@ -519,7 +519,7 @@ static void initLoraModem()
 	
 	// Set the radio in Continuous listen mode
 	rxLoraModem();
-	if (debug >= 1) Serial.print(F("initLoraModem done"));
+	if (debug >= 1) Serial.println(F("initLoraModem done"));
 }
 
 
