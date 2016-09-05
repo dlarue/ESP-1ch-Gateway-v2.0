@@ -45,7 +45,7 @@ static char *wpa[WPASIZE][2] = {
 
 // Port is UDP port in this program
 #define _THINGPORT 1701							// dash.things4u.eu
-#define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
+//#define _THINGSERVER "yourserver.com"			// Server URL of the LoRa-udp.js program
 
 // Gateway Ident definitions
 #define _DESCRIPTION "ESP Gateway"
