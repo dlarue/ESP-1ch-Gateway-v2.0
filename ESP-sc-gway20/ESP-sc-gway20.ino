@@ -71,7 +71,7 @@ uint32_t cp_up_pkt_fwd;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
 uint8_t MAC_array[6];
-char MAC_char[18];
+char MAC_char[19]; // 3*sizeof(MAC_array)+1 because sprintf null terminates strings
 
 /*******************************************************************************
  *
@@ -727,35 +727,33 @@ void setup () {
 		}
 		delay(500);
 	//}
-	 
 	WiFi.macAddress(MAC_array);
-    for (int i = 0; i < sizeof(MAC_array); ++i){
-      sprintf(MAC_char,"%s%02x:",MAC_char,MAC_array[i]);
-    }
+  for (int i = 0; i < sizeof(MAC_array); ++i){
+     sprintf(MAC_char,"%s%02x:",MAC_char,MAC_array[i]);
+  }
 	Serial.print("MAC: ");
-    Serial.println(MAC_char);
+  Serial.println(MAC_char);
 	
-    pinMode(ssPin, OUTPUT);
-    pinMode(dio0, INPUT);
-    pinMode(RST, OUTPUT);
+  pinMode(ssPin, OUTPUT);
+  pinMode(dio0, INPUT);
+  pinMode(RST, OUTPUT);
 	
 	SPI.begin();
 	delay(1000);
-    initLoraModem();
+  initLoraModem();
 	delay(500);
 	
 	// We choose the Gateway ID to be the Ethernet Address of our Gateway card
     // display results of getting hardware address
 	// 
-    Serial.print("Gateway ID: ");
-    char buf[16];
-    WiFi.macAddress(MAC_array);
-    sprintf(buf, "%02x%02x%02xffff%02x%02x%02x", \
+  Serial.print("Gateway ID: ");
+  char buf[16];
+  sprintf(buf, "%02x%02x%02xffff%02x%02x%02x", \
         MAC_array[0],MAC_array[1],MAC_array[2],MAC_array[3],MAC_array[4],MAC_array[5]);
-    Serial.print(buf);
+  Serial.print(buf);
 
 
-    Serial.print(", Listening at SF");
+  Serial.print(", Listening at SF");
 	Serial.print(sf);
 	Serial.print(" on ");
 	Serial.print((double)freq/1000000);
