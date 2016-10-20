@@ -617,8 +617,8 @@ void sendstat() {
     uint8_t status_report[STATUS_SIZE]; 					// status report as a JSON object
     char stat_timestamp[32];								// XXX was 24
     time_t t;
-	char clat[8]={0};
-	char clon[8]={0};
+	char clat[12]={0};
+	char clon[12]={0};
 
     int stat_index=0;
 	
