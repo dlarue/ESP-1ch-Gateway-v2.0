@@ -64,8 +64,8 @@ static char *wpa[WPASIZE][2] = {
 #define _BAUDRATE 115200		// Works for debug messages to serial momitor (if attached).
 
 // ntp
-#define NTP_TIMESERVER "nl.pool.ntp.org"	// Country and region specific
-#define NTP_TIMEZONES	2		// How far is our Timezone from UTC (excl daylight saving/summer time)
+#define NTP_TIMESERVER "us.pool.ntp.org"	// Country and region specific
+#define NTP_TIMEZONES	-8		// How far is our Timezone from UTC (excl daylight saving/summer time)
 #define SECS_PER_HOUR	3600
 
 #if !defined(CFG_noassert)
