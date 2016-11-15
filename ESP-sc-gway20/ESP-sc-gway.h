@@ -53,9 +53,9 @@ static char *wpa[WPASIZE][2] = {
 #define _DESCRIPTION "ESP Gateway"
 #define _EMAIL "youremail@gmail.com"
 #define _PLATFORM "ESP8266"
-#define _LAT -117.00000
-#define _LON 32.00000
-#define _ALT 4
+#define _LAT 32.00000
+#define _LON -117.00000
+#define _ALT 0
 
 								
 // Definitions for the admin webserver
