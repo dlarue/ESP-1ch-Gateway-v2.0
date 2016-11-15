@@ -52,7 +52,7 @@ extern "C" {
 #include "loraModem.h"
 #include "ESP-sc-gway.h"   // This file contains configuration of GWay
 
-int debug=1;	// Debug level! 0 is no msgs, 1 normal, 2 is extensive
+int debug=DEBUG;	// Debug level! 0 is no msgs, 1 normal, 2 is extensive
 
 using namespace std;
 
@@ -647,8 +647,8 @@ void sendstat() {
 	sprintf(stat_timestamp, "%d-%d-%2d %d:%d:%02d CET", year(),month(),day(),hour(),minute(),second());
 	yield();
 	
-	ftoa(lat,clat,4);										// Convert lat to char array with 4 decimals
-	ftoa(lon,clon,4);										// As Arduino CANNOT prints floats
+	ftoa(lat,clat,5);										// Convert lat to char array with 4 decimals
+	ftoa(lon,clon,5);										// As Arduino CANNOT prints floats
 	
 	// Build the Status message in JSON format, XXX Split this one up...
 	delay(1);

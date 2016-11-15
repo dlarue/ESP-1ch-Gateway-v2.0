@@ -11,8 +11,10 @@
 
 
 #define STATISTICS 1			// Gather statistics on sensor and Wifi status
-#define DEBUG 1					// Initial value of debug var. Can be hanged using the admin webserver
-								// For operational use, set initial DEBUG vaulue 0
+// Initial value of debug var. Can be changed using the admin webserver
+// Debug level! 0 is no msgs, 1 normal, 2 is extensive
+// For operational use, set initial DEBUG vaulue 0
+#define DEBUG 1
 
 #define CFG_sx1276_radio		// Define the correct radio type that you are using
 //#define CFG_sx1272_radio		// sx1272 not supported yet
@@ -51,8 +53,8 @@ static char *wpa[WPASIZE][2] = {
 #define _DESCRIPTION "ESP Gateway"
 #define _EMAIL "youremail@gmail.com"
 #define _PLATFORM "ESP8266"
-#define _LAT 52.00
-#define _LON 5.000
+#define _LAT -117.00000
+#define _LON 32.00000
 #define _ALT 4
 
 								
